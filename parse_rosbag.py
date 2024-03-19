@@ -10,6 +10,8 @@ print(bag)
 
 info = bag.get_type_and_topic_info() # tuple : (msy_types, topics)
 topics = info[1].keys()
+print(topics)
+# assert 0
 
 # topic_list = [
 
@@ -33,18 +35,19 @@ for i in range(2):
         DESCRIPTION = 'color_'
     # image_topic = bag.read_messages(TOPIC)
     for topic, msg, t in bag.read_messages(topics=[TOPIC]):
-        # print(topic, t, type(msg), len(msg.data))
+        print(topic, t, type(msg), msg.header, len(msg.data))
+
         # print(t.to_sec())
-        # assert 0
+        assert 0
         bridge = CvBridge()
         cv_image = bridge.compressed_imgmsg_to_cv2(msg)
         cv_image.astype(np.uint8)
-        if (DESCRIPTION == 'depth_'):
-            # depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(cv_image, alpha=0.03), cv2.COLORMAP_JET)
-            cv2.imwrite(ROOT_DIR + '/depth/' + DESCRIPTION + str(t.to_sec()) + '.png', cv_image)
-        else:
-            cv2.imwrite(ROOT_DIR + '/color/' + DESCRIPTION + str(t.to_sec()) + '.png', cv_image)
-        print('saved: ' + DESCRIPTION + str(t.to_sec()) + '.png')
+        # if (DESCRIPTION == 'depth_'):
+        #     # depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(cv_image, alpha=0.03), cv2.COLORMAP_JET)
+        #     cv2.imwrite(ROOT_DIR + '/depth/' + DESCRIPTION + str(t.to_sec()) + '.png', cv_image)
+        # else:
+        #     cv2.imwrite(ROOT_DIR + '/color/' + DESCRIPTION + str(t.to_sec()) + '.png', cv_image)
+        # print('saved: ' + DESCRIPTION + str(t.to_sec()) + '.png')
 
     print('PROCESS %s COMPLETE' % DESCRIPTION)
     # break

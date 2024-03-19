@@ -1,0 +1,5 @@
+./data/*
+*.bag
+*.mp4
+*.png
+*.json
