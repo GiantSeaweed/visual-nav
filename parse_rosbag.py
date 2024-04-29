@@ -4,14 +4,25 @@ import cv2
 from cv_bridge import CvBridge      # sudo apt-get install ros-melodic-cv-bridge
 import os
 
-bag = rosbag.Bag('./ahg2library.bag')
+bag = rosbag.Bag('./ahg2library-new2.bag')
 
 print(bag)
 
 info = bag.get_type_and_topic_info() # tuple : (msy_types, topics)
 topics = info[1].keys()
 print(topics)
-# assert 0
+
+filter_topics = [tp for tp in topics if ('velodyne' not in tp and 'camera' not in tp)]
+print('filter:', filter_topics)
+# for topic, msg, t in bag.read_messages(topics=filter_topics):
+# for topic, msg, t in bag.read_messages(topics=['/imu/data_raw']):
+for topic, msg, t in bag.read_messages(topics=['/jackal_velocity_controller/odom']):
+    print(topic, t, type(msg), msg)
+    # print the first message
+    break
+
+
+assert 0
 
 # topic_list = [
 
